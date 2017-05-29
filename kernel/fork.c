@@ -661,8 +661,10 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
 		mm->map_count++;
 		retval = copy_page_range(mm, oldmm, mpnt);
 
-		if (tmp->vm_ops && tmp->vm_ops->open)
-			tmp->vm_ops->open(tmp);
+		if (tmp->vm_ops){
+			if(tmp->vm_ops->open)
+				tmp->vm_ops->open(tmp);
+		}
 
 		if (retval)
 			goto out;
